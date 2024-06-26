@@ -27,10 +27,6 @@ $router->post('/teszt', [new SecuredMiddleware("teszt_kulcs")], function ($dataF
 });
 
 
-$router->get('/test/test2', [new AuthMiddleware()], function ($dataFromRequest) {
-    echo 'GET /test/test2';
-});
-
 $router->post('/login', [], function ($dataFromRequest) {
     print_r($dataFromRequest->data);
 });
