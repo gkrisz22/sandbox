@@ -1,4 +1,7 @@
 <?php
+define('DEBUG', true);
+
+
 require __DIR__ . '/autoload.php';
 
 // Végpontok betöltése

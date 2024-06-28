@@ -29,5 +29,13 @@
     return false;">Send POST request to /teszt</a>';
 
     ?>
+
+
+    <form action="/oktatas/teszt" method="POST">
+        <input type="hidden" name="token" value="<?= htmlspecialchars(generate_csrf_token()) ?>">
+        <input type="text" name="szoveg" placeholder="Ez szöveg">
+        <input type="number" name="szam" placeholder="Ez egy szám">
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>

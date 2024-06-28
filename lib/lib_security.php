@@ -12,3 +12,19 @@ function encrypt_data($key, $data) {
     $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
     return base64_encode($encrypted . '::' . $iv);
 }
+
+/**
+ * CRSF token készítése egy adott kulccsal
+ * @param string $key   A token készítéséhez használt kulcs
+ * @return string       A token
+*/
+function generate_csrf_token() {
+    if(session_status() == PHP_SESSION_NONE)
+        session_start();
+
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    
+    return $_SESSION['csrf_token'];
+}
