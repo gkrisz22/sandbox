@@ -7,15 +7,15 @@
 <body>
     <?php
 
-    echo "hello";
+    require '../lib/lib_security.php';
 
-    $key = "teszt_kulcs";
-    $encrypted = encrypt_data($key, json_encode(['name' => 'Teszt']));
+    echo "hello";
+    $encrypted = encrypt_data('teszt_kulcs', json_encode(['name' => 'Teszt', 'age' => 20, 'email' => 'teszt@teszt.com']));
 
     echo '<a href="#" onclick="
     const encrypted = \'' . $encrypted . '\';
     $.ajax({
-        url: \'/teszt\',
+        url: \'/oktatas/teszt\',
         type: \'POST\',
         contentType: \'application/json\',
         data: JSON.stringify({data: encrypted}),
@@ -24,17 +24,9 @@
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
-            console.error(status);
-            console.error(error);
         }
     });
     return false;">Send POST request to /teszt</a>';
-
-    function encrypt_data($key, $data) {
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
-        return base64_encode($encrypted . '::' . $iv);
-    }
 
     ?>
 </body>

@@ -4,7 +4,7 @@ namespace ELME\App\Request;
 
 class Request
 {
-    public $data;
+    public $data = [];
     public $headers;
 
     public function __construct($data, $headers)

@@ -3,6 +3,7 @@
 namespace ELME\App\Router;
 
 use ELME\App\Request\Request;
+use ELME\App\Request\Response;
 
 /**
  * Egy végpontot reprezentáló osztály
@@ -10,12 +11,6 @@ use ELME\App\Request\Request;
  */
 class Route
 {
-    /**
-     * @var string  $method The HTTP method
-     * @var string  $path The URL path
-     * @var array   $middlewares The middlewares to be executed
-     * @var void    $handler The handler to be executed
-     */
     private $method;
     private $path;
     private $middlewares;
@@ -58,8 +53,12 @@ class Route
             if ($res !== null) {
                 $request = $res;
             }
+            if ($res instanceof Response) {
+                http_response_code($res->status);
+                return;
+            }
         }
 
-        ($this->handler)($request);
+        ($this->handler)($request->data, $request->headers);
     }
 }
